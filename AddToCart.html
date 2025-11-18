@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="image/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+
+  <section class="services">
+    <h1>Your <span>Cart</span></h1>
+    <div class="services_cards" id="cartItems"></div>
+    <div style="margin-top:30px;">
+      <button onclick="clearCart()" style="padding:10px 25px; border:none; background:linear-gradient(to right,#c72092,#6c14d0); color:white; border-radius:8px; font-size:16px;">Clear Cart</button>
+    </div>
+  </section>
+
+  <script>
+    function loadCart() {
+      const cartContainer = document.getElementById("cartItems");
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty 🛒</p>";
+        return;
+      }
+
+      cartContainer.innerHTML = cart.map(item => `
+        <div class="services_box">
+          <img src="${item.imgSrc}" style="width:150px; border-radius:10px;">
+          <h3>${item.name}</h3>
+          <p>Price: ${item.price}</p>
+        </div>
+      `).join("");
+    }
+
+    function clearCart() {
+      localStorage.removeItem("cart");
+      loadCart();
+    }
+
+    loadCart();
+  </script>
+
+</body>
+</html>
